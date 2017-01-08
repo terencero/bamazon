@@ -50,6 +50,16 @@ inquirer.prompt([{
                 name: 'userQuantity'
             }]).then(function(ans) {
                 // check table; if statement: return success or insufficient quantities
+                var currentStock;
+
+                connection.query('SELECT ans.userItemId stock_quantity FROM products', function(err, res) {
+
+                	if (err) throw console.log('Oops...This is embarrassing... looks like our server is down. Try again later.');
+
+                	currentStock = res;
+                	console.log(res);
+                });
+                // if(ans.)
 
             });
         }).catch(function(val2) {
