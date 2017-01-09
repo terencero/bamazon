@@ -56,16 +56,20 @@ inquirer.prompt([{
                     if (err) throw console.log('Oops...This is embarrassing... looks like our server is down. Try again later.');
 
                     if (ans.userQuantity <= res[0].stock_quantity) {
-                        console.log('Great! Your order will be processed now.');
-                        var result = quantityUpdate(res[0].stock_quantity, ans.userQuantity);
+                        
+                        var resultTotal = purchaseTotal(ans.userQuantity, res[0].price);
+
+                        var resultQuantity = quantityUpdate(res[0].stock_quantity, ans.userQuantity);
                         // console.log(quantityUpdate(res[0].stock_quantity, ans.userQuantity));
 
                         connection.query('UPDATE products SET ? WHERE ?', [{
-                            stock_quantity: result
+                            stock_quantity: resultQuantity
                         }, {
                             item_id: ans.userItemId
                         }], function(err, res) {});
-                        
+
+                        console.log('Great! Your order will be processed now. Your total cost will be ' + '$' + resultTotal);
+
                     } else if (res[0].stock_quantity === '0') {
                         console.log('Sorry, but this item is currently out of stock. Check back soon!');
                     } else if (ans.userQuantity > res[0].stock_quantity) {
@@ -85,4 +89,8 @@ inquirer.prompt([{
 
 function quantityUpdate(stockQ, userQ) {
     return stockQ - userQ;
+}
+
+function purchaseTotal(userOrder, price) {
+	return userOrder * price;
 }
