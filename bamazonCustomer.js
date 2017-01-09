@@ -34,7 +34,7 @@ inquirer.prompt([{
                 if (err) throw console.log('Oops...This is embarrassing... looks like our server is down. Try again later.');
 
                 for (i = 0; i < res.length; i++) {
-                    console.log(chalk.blue('Product Id:') + ' ' + chalk.blue(res[i].item_id) + ' ' + '|' + ' ' + chalk.red('Product Name:') + ' ' + chalk.red(res[i].product_name) + ' ' + '|' + ' ' + chalk.green('Price:') + ' ' + chalk.green(res[i].price));
+                    console.log(chalk.blue.bgWhite('Product Id:' + ' ' + res[i].item_id + ' ' + '|' + ' ') + chalk.red.bgWhite('Product Name:' + ' ' + res[i].product_name + ' ' + '|' + ' ') + chalk.green.bgWhite('Price:' + ' ' + res[i].price));
                 }
                 resolve();
             });
@@ -50,16 +50,21 @@ inquirer.prompt([{
                 name: 'userQuantity'
             }]).then(function(ans) {
                 // check table; if statement: return success or insufficient quantities
-                var currentStock;
 
-                connection.query('SELECT ans.userItemId stock_quantity FROM products', function(err, res) {
+                connection.query('SELECT * FROM products WHERE item_id=?', [ans.userItemId], function(err, res) {
 
-                	if (err) throw console.log('Oops...This is embarrassing... looks like our server is down. Try again later.');
+                    if (err) throw console.log('Oops...This is embarrassing... looks like our server is down. Try again later.');
 
-                	currentStock = res;
-                	console.log(res);
+                    if (ans.userQuantity <= res[0].stock_quantity) {
+                        console.log('Great! Your order will be processed now.');
+                    } else if (res[0].stock_quantity === '0') {
+                        console.log('Sorry, but this item is currently out of stock. Check back soon!');
+                    } else if (ans.userQuantity > res[0].stock_quantity) {
+                        console.log(chalk.blue.bgWhite('Sorry, but there currently is not enough to fulfill your order. There are only ') + chalk.magenta.bgWhite(res[0].stock_quantity) + chalk.blue.bgWhite(' left in stock. Try reducing your order.'));
+                    }
                 });
-                // if(ans.)
+
+
 
             });
         }).catch(function(val2) {
