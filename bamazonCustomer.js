@@ -12,10 +12,12 @@ var connection = mysql.createConnection({
     database: 'bamazon'
 });
 
-connection.connect(function(err) {
+connection.connect(function(err, res) {
     if (err) throw err;
+    initialPrompt();
 });
 
+function initialPrompt(){
 inquirer.prompt([{
         type: 'list',
         message: 'Would you like to browse our selections?',
@@ -26,8 +28,16 @@ inquirer.prompt([{
 ]).then(function(ans) {
     if (ans.userChoice === 'no') {
         console.log('Sorry to see you go!  Come back soon to find great sustainable products for great prices!');
+        connection.end();
 
     } else if (ans.userChoice === 'yes') {
+    	itemPicker();
+    }
+
+});
+}
+
+function itemPicker(){	
         new Promise(function(resolve, reject) {
             connection.query('SELECT * FROM products', function(err, res) {
 
@@ -69,9 +79,11 @@ inquirer.prompt([{
                         }], function(err, res) {});
 
                         console.log('Great! Your order will be processed now. Your total cost will be ' + '$' + resultTotal);
+                        connection.end();
 
                     } else if (res[0].stock_quantity === '0') {
                         console.log('Sorry, but this item is currently out of stock. Check back soon!');
+
                     } else if (ans.userQuantity > res[0].stock_quantity) {
                         console.log(chalk.blue.bgWhite('Sorry, but there currently is not enough to fulfill your order. There are only ') + chalk.magenta.bgWhite(res[0].stock_quantity) + chalk.blue.bgWhite(' left in stock. Try reducing your order.'));
                     }
@@ -80,10 +92,9 @@ inquirer.prompt([{
             });
         }).catch(function(val2) {
             console.log('Oops...This is embarrassing... looks like our server is down. Try again later.');
+            connection.end();
         });
     }
-
-});
 
 function quantityUpdate(stockQ, userQ) {
     return stockQ - userQ;
@@ -91,4 +102,8 @@ function quantityUpdate(stockQ, userQ) {
 
 function purchaseTotal(userOrder, price) {
     return userOrder * price;
+}
+
+function returnToMain(){
+
 }
