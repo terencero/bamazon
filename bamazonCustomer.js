@@ -34,7 +34,7 @@ inquirer.prompt([{
                 if (err) throw console.log('Oops...This is embarrassing... looks like our server is down. Try again later.');
 
                 for (i = 0; i < res.length; i++) {
-                    console.log(chalk.blue.bgWhite('Product Id:' + ' ' + res[i].item_id + ' ' + '|' + ' ') + chalk.red.bgWhite('Product Name:' + ' ' + res[i].product_name + ' ' + '|' + ' ') + chalk.green.bgWhite('Price:' + ' ' + res[i].price));
+                    console.log(chalk.blue.bgWhite('Product Id:' + ' ' + res[i].item_id + ' ' + '|' + ' ') + chalk.red.bgWhite('Product Name:' + ' ' + res[i].product_name + ' ' + '|' + ' ') + chalk.green.bgWhite('Price:' + ' ' + '$' + res[i].price));
                 }
                 resolve();
             });
@@ -56,7 +56,7 @@ inquirer.prompt([{
                     if (err) throw console.log('Oops...This is embarrassing... looks like our server is down. Try again later.');
 
                     if (ans.userQuantity <= res[0].stock_quantity) {
-                        
+
                         var resultTotal = purchaseTotal(ans.userQuantity, res[0].price);
 
                         var resultQuantity = quantityUpdate(res[0].stock_quantity, ans.userQuantity);
@@ -83,8 +83,6 @@ inquirer.prompt([{
         });
     }
 
-}).then(function(val) {
-
 });
 
 function quantityUpdate(stockQ, userQ) {
@@ -92,5 +90,5 @@ function quantityUpdate(stockQ, userQ) {
 }
 
 function purchaseTotal(userOrder, price) {
-	return userOrder * price;
+    return userOrder * price;
 }
