@@ -44,7 +44,7 @@ function connect() {
 }
 
 // function which asks initial question
-function initialPrompt() {
+function initialPrompt(ans) {
 
     return inquirer.prompt([{
         type: 'list',
@@ -108,7 +108,7 @@ function userSelect(ans) {
             var resultTotal = purchaseTotal(ans.userQuantity, res[0].price);
 
             var resultQuantity = quantityUpdate(res[0].stock_quantity, ans.userQuantity);
-            // console.log(quantityUpdate(res[0].stock_quantity, ans.userQuantity));
+            
 
             connection.query('UPDATE products SET ? WHERE ?', [{
                 stock_quantity: resultQuantity
@@ -119,7 +119,7 @@ function userSelect(ans) {
             console.log('Great! Your order will be processed now. Your total cost will be ' + '$' + resultTotal);
             connection.end();
 
-        } else if (res[0].stock_quantity === '0') {
+        } else if (res[0].stock_quantity === 0) {
             console.log('Sorry, but this item is currently out of stock. Check back soon!');
             return returnToMain();
 
@@ -155,7 +155,7 @@ function returnToMain() {
     }]).then(function(ans) {
         if (ans.userChoice === 'Continue shopping') {
             return new Promise(function(success, failure){
-            	return initialPrompt();
+            	return success(initialPrompt());
             }).then(function(ans){
             	return itemPicker(ans);
             }).then(function(ans){
@@ -180,7 +180,7 @@ function offerAlternatives(itemChoice, stockQuantity, itemTotal) {
             // itemPicker();
             return pickAnother(itemChoice, stockQuantity, itemTotal);
         } else if (ans.userAlternative === 'Continue shopping') {
-            return continueShopping(ans);
+            return continueShopping();
         } else if (ans.userAlternative === 'Exit') {
             console.log('Sorry to see you go!  Come back soon to find great sustainable products for great prices!');
 
@@ -229,17 +229,17 @@ function pickAnother(itemChoice, stockQuantity, itemTotal) {
 
 function continueShopping(ans){
             return new Promise(function(success, failure) {
-            var func = initialPrompt();
-            success(func);
-            // return true;
-               // return initialPrompt();
+           
+            return success(initialPrompt());
+            
+               
             }).then(function(ans) {
-                console.log(2);
-                // return true;
+               
                 return itemPicker(ans);
+                 
             }).then(function(ans) {
-                console.log(3);
-                return true;
-                // return userSelect(ans);
+                
+                
+                userSelect(ans);
             });
         }
