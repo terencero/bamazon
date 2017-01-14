@@ -9,10 +9,6 @@ var mysql = require('mysql');
 
 // global variable to make tables
 
-var table = new Table({
-    head: ['Product ID', 'Product Name', 'Price'],
-    colWidths: []
-});
 // create connection to server 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -68,6 +64,10 @@ function itemPicker(ans) {
     return new Promise(function(success, failure) {
         connection.query('SELECT * FROM products', function(err, res) {
 
+            var table = new Table({
+                head: ['Product ID', 'Product Name', 'Price'],
+                colWidths: []
+            });
             if (err) throw console.log('Oops...This is embarrassing... looks like our server is down. Try again later.');
 
             for (i = 0; i < res.length; i++) {
@@ -75,9 +75,10 @@ function itemPicker(ans) {
                 table.push([chalk.blue.bgWhite('Product Id:' + ' ' + res[i].item_id), chalk.red.bgWhite('Product Name:' + ' ' + res[i].product_name), chalk.green.bgWhite('Price:' + ' ' + '$' + res[i].price)]);
             }
             if (err) failure(err);
-            success(console.log(table.toString()));
+            console.log(table.toString());
+            success(res);
         });
-    }).then(function() {
+    }).then(function(dbResults) {
         return inquirer.prompt([{
             type: 'input',
             message: 'Find something you like? Enter the item id to purchase.',
@@ -154,9 +155,7 @@ function returnToMain() {
         name: 'userChoice'
     }]).then(function(ans) {
         if (ans.userChoice === 'Continue shopping') {
-            return new Promise(function(success, failure) {
-                return success(initialPrompt());
-            }).then(function(ans) {
+            return initialPrompt().then(function(ans) {
                 return itemPicker(ans);
             }).then(function(ans) {
                 return userSelect(ans);
@@ -228,9 +227,7 @@ function pickAnother(itemChoice, stockQuantity, itemTotal) {
 }
 // browse more items; start from beginning of menu prompt
 function continueShopping(ans) {
-    return new Promise(function(success, failure) {
-        return success(initialPrompt());
-    }).then(function(ans) {
+    return initialPrompt().then(function(ans) {
         return itemPicker(ans);
     }).then(function(ans) {
         userSelect(ans);
