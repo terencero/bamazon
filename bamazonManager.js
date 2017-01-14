@@ -12,10 +12,14 @@ var connection = mysql.createConnection({
     database: 'bamazon'
 });
 
-connection.connect(function(err) {
-    if (err) throw err;
-    initialPrompt();
-});
+function connect() {
+    return new Promise(function(success, failure) {
+        connection.connect(function(err, res) {
+            if (err) failure(err);
+            success(res);
+        });
+    });
+}
 
 function initialPrompt() {
     inquirer.prompt([{
