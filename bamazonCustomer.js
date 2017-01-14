@@ -108,7 +108,7 @@ function userSelect(ans) {
             var resultTotal = purchaseTotal(ans.userQuantity, res[0].price);
 
             var resultQuantity = quantityUpdate(res[0].stock_quantity, ans.userQuantity);
-            
+
 
             connection.query('UPDATE products SET ? WHERE ?', [{
                 stock_quantity: resultQuantity
@@ -154,12 +154,12 @@ function returnToMain() {
         name: 'userChoice'
     }]).then(function(ans) {
         if (ans.userChoice === 'Continue shopping') {
-            return new Promise(function(success, failure){
-            	return success(initialPrompt());
-            }).then(function(ans){
-            	return itemPicker(ans);
-            }).then(function(ans){
-            	return userSelect(ans);
+            return new Promise(function(success, failure) {
+                return success(initialPrompt());
+            }).then(function(ans) {
+                return itemPicker(ans);
+            }).then(function(ans) {
+                return userSelect(ans);
             });
         } else if (ans.userChoice === 'Exit') {
             console.log('Sorry to see you go! Come back soon!');
@@ -226,20 +226,13 @@ function pickAnother(itemChoice, stockQuantity, itemTotal) {
         }
     });
 }
-
-function continueShopping(ans){
-            return new Promise(function(success, failure) {
-           
-            return success(initialPrompt());
-            
-               
-            }).then(function(ans) {
-               
-                return itemPicker(ans);
-                 
-            }).then(function(ans) {
-                
-                
-                userSelect(ans);
-            });
-        }
+// browse more items; start from beginning of menu prompt
+function continueShopping(ans) {
+    return new Promise(function(success, failure) {
+        return success(initialPrompt());
+    }).then(function(ans) {
+        return itemPicker(ans);
+    }).then(function(ans) {
+        userSelect(ans);
+    });
+}

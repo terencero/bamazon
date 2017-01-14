@@ -12,6 +12,10 @@ var connection = mysql.createConnection({
     database: 'bamazon'
 });
 
+connect().then(function() {
+    return initialPrompt();
+});
+
 function connect() {
     return new Promise(function(success, failure) {
         connection.connect(function(err, res) {
