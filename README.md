@@ -10,7 +10,7 @@ Customers can browse and purchase items while managers can browse the inventory 
 
 Here are some ways you can navigate through this app:
 
-Customer menu.  
+<h3>Customer Menu</h3>  
 The customer is prompted to browse and select a product from a table.
 ![Alt text](/screenshots/initialprompt.png?raw=true)
 
@@ -20,6 +20,17 @@ If the product is too low in inventory, then an alternative menu is presented.
 The customer can change quantity requested.
 ![Alt text](/screenshots/pickanotherquantity.png?raw=true)
 The customer can browse other products.
+![Alt text](/screenshots/continueshopping.png?raw=true)
+
+<h3>Manager Menu</h3>
+The manager is given an initial prompt. To view all products or products with low inventory.
+![Alt text](/screenshots/managermainmenu.png?raw=true)
+
+The manager can add a new product.
+![Alt text](/screenshots/addingnewproduct.png?raw=true)
+New product is displayed when the manager chooses "View products for sale" option.
+![Alt text](/screenshots/newproduct.png?raw=true)
+The manager can update the inventory.  *Note the user should enter the desired total inventory number and not the amount to add or subtract.
 ![Alt text](/screenshots/continueshopping.png?raw=true)
 
 <h1>Installation</h1>
