@@ -27,7 +27,8 @@ Here are some ways you can navigate through this app:
 *The manager is given an initial prompt. To view all products or products with low inventory.*
 ![Alt text](/screenshots/managermainmenu.png?raw=true)
 
-
+*Add a new product*
+![Alt text](/screenshots/addingnewproduct.png?raw=true)
 
 *New product is displayed when the manager chooses "View products for sale" option.*
 ![Alt text](/screenshots/newproduct.png?raw=true)
