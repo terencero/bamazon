@@ -28,6 +28,7 @@ Here are some ways you can navigate through this app:
 
 *The manager can add a new product.*
 ![Alt text](/screenshots/addingnewproduct.png?raw=true)
+
 *New product is displayed when the manager chooses "View products for sale" option.*
 ![Alt text](/screenshots/newproduct.png?raw=true)
 *The manager can update the inventory.  *Note the user should enter the desired total inventory number and not the amount to add or subtract.*
