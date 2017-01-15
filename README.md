@@ -10,8 +10,17 @@ Customers can browse and purchase items while managers can browse the inventory 
 
 Here are some ways you can navigate through this app:
 
+Customer menu.  
+The customer is prompted to browse and select a product from a table.
+![Alt text](/screenshots/initialprompt.png?raw=true)
 
+If the product is too low in inventory, then an alternative menu is presented.
+![Alt text](/screenshots/alternativemenu.png?raw=true)
 
+The customer can change quantity requested.
+![Alt text](/screenshots/pickanotherquantity.png?raw=true)
+The customer can browse other products.
+![Alt text](/screenshots/continueshopping.png?raw=true)
 
 <h1>Installation</h1>
 
