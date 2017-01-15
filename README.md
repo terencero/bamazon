@@ -19,6 +19,7 @@ Here are some ways you can navigate through this app:
 
 *The customer can change quantity requested.*
 ![Alt text](/screenshots/pickanotherquantity.png?raw=true)
+
 *The customer can browse other products.*
 ![Alt text](/screenshots/continueshopping.png?raw=true)
 
@@ -31,6 +32,7 @@ Here are some ways you can navigate through this app:
 
 *New product is displayed when the manager chooses "View products for sale" option.*
 ![Alt text](/screenshots/newproduct.png?raw=true)
+
 *The manager can update the inventory.  *Note the user should enter the desired total inventory number and not the amount to add or subtract.*
 ![Alt text](/screenshots/continueshopping.png?raw=true)
 
